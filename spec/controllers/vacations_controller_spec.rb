@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe VacationsController, type: :controller do
 
-let(:admin)    { create :employee, admin: true}
-let(:employee) { create :employee}
-let(:vacation) { create :vacation, employee: employee}
-let(:vacation_other) { create :vacation, employee: admin}
+  let(:admin)    { create :employee, admin: true}
+  let(:employee) { create :employee}
+  let(:vacation) { create :vacation, employee: employee}
+  let(:vacation_other) { create :vacation, employee: admin}
 
   describe 'GET #new' do
     context 'Authenticated employee' do
-      before { sign_in(employee) }
-
-      before { get :new }
+      before do
+        sign_in(employee)
+        get :new
+      end
 
       it 'assigns a new Vacation to @vacation' do
         expect(assigns(:vacation)).to be_a_new(Vacation)
@@ -32,7 +33,69 @@ let(:vacation_other) { create :vacation, employee: admin}
   end
 
   describe 'POST #create' do
-    
+    context 'Authenticated employee' do
+      before { sign_in(employee) }
+
+      context 'create vacation with valid attributes' do
+        it 'saves new order in DB' do
+          expect {
+                  post :create,
+                  params: { vacation: attributes_for(:vacation) }
+                 }
+                 .to change(Vacation, :count).by(1)
+        end
+
+        it 'redirect to vacation path' do
+          post :create, params: { vacation: attributes_for(:vacation) }      
+          expect(response).to redirect_to assigns(:vacation)
+        end
+      end
+
+      context 'create vacation with invalid attributes' do
+        it 'does not saves new order in DB' do
+          expect {
+                  post :create,
+                  params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) }
+                 }
+                 .to_not change(Vacation, :count)
+        end
+
+        it 're-renders new view' do
+          post :create, params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) } 
+          expect(response).to render_template :new
+        end
+      end
+
+      context 'create vacation with end_date earlier start_date' do
+        it 'does not saves new order in DB' do
+          expect {
+                  post :create,
+                  params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) }
+                 }
+                 .to_not change(Vacation, :count)
+        end
+
+        it 're-renders new view' do
+          post :create, params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) } 
+          expect(response).to render_template :new
+        end
+      end
+    end
+
+    context 'Unauthenticated employee create vacation' do
+      it 'does not saves new order in DB' do
+        expect {
+                post :create,
+                params: { vacation: attributes_for(:vacation) }
+               }
+               .to_not change(Vacation, :count)
+      end
+
+      it 'redirect to root path' do
+        post :create, params: { vacation: attributes_for(:vacation) }      
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'GET #index' do
@@ -99,7 +162,7 @@ let(:vacation_other) { create :vacation, employee: admin}
       end
     end
 
-    context "Adminlooks at employees vacation" do
+    context "Admin looks at employees vacation" do
       before do
         sign_in(admin)
         get :show, params: { id: vacation }
