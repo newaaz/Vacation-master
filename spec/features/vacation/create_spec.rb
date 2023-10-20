@@ -18,23 +18,35 @@ feature 'Employee may request a vacation', %q{
     scenario 'with valid attributes' do
       fill_in 'vacation_start_date', with: '14.06.2024'
       fill_in 'vacation_end_date', with: '03.07.2024'
+      click_button 'Request vacation'
 
-      expect(page).to have_content "Vacation №-#{Vacation.last.id}"
+      vacation = Vacation.last
+
+      expect(page).to have_content "Vacation № #{vacation.id} request sent successfully"
+      expect(page).to have_content "#{vacation.id} from #{vacation.start_date} to #{vacation.end_date}"
     end
 
     scenario 'with invalid attributes' do
+      click_button 'Request vacation'
 
+      expect(page).to have_content "Start date can't be blank"
+      expect(page).to have_content "End date can't be blank"
     end
 
     scenario 'with end_date earlier start_date' do
+      fill_in 'vacation_start_date', with: '14.06.2024'
+      fill_in 'vacation_end_date', with: '03.07.2020'
+      click_button 'Request vacation'
+
+      expect(page).to have_content "End date must be after the start date"
     end
   
   end
 
-  describe 'Unauthenticated employee create vacation' do
-    scenario 'try to create vacation' do
-      
-    end
-  end
+  scenario 'Unauthenticated employee create vacation' do
+    visit root_path
 
+    expect(page).to_not have_link'Request vacation'
+    expect(page).to have_link 'Log in'
+  end
 end

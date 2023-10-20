@@ -20,7 +20,7 @@ class VacationsController < ApplicationController
     @vacation = current_employee.vacations.build(vacation_params)
     
     if @vacation.save
-      flash[:success] = "Vacation request sent successfully"
+      flash[:success] = "Vacation № #{@vacation.id} request sent successfully"
       redirect_to @vacation
     else
       render 'new', status: :unprocessable_entity
