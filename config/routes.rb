@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   devise_for :employees
 
   resources :vacations, except: [:edit, :update]
+
+  resources :employees, only: [:show]
 end
