@@ -1,5 +1,9 @@
 <h1>Vacations List</h1>
 
 <% @vacations.each do |vacation| %>
-  <%= link_to vacation.id, vacation %>
+  <%= link_to "Vacation request № #{vacation.id}", vacation %>
+  
+  <%= "from #{vacation.start_date} to #{vacation.end_date}" %>
+
+  <br>
 <% end %>
