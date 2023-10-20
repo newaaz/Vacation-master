@@ -1,0 +1,24 @@
+  <h1>Vacation request:</h1>
+
+  <%= form_with(model: @vacation) do |f| %>
+    <%= render 'shared/errors', object: f.object %>
+
+    <!-- checkin - checkout -->
+    <div class="row">
+      <div class="col-6 form-group mb-2">
+        <%= f.label :start_date, class: 'form-label' %>        
+        <%= f.date_field :start_date, class: 'form-control' %>
+      </div>
+      <div class="col-6 form-group mb-2">
+        <%= f.label :end_date, class: 'form-label' %>        
+        <%= f.date_field :end_date, class: 'form-control' %>
+      </div>
+    </div>
+
+    <%= f.submit "Request",class:"btn btn-primary my-4" %>
+  <% end %>
+
+
+
+
+
