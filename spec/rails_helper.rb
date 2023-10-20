@@ -81,3 +81,7 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Pundit::Matchers.configure do |config|
+  config.user_alias = :employee
+end
+
