@@ -73,7 +73,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "webdriver", "~> 0.19.0"
-  gem "gem", "~> 0.0.1.alpha"
+  #gem "gem", "~> 0.0.1.alpha"
   gem "selenium-webdriver", "~> 4.14"
   gem "shoulda-matchers", "~> 5.2"
   gem "launchy", "~> 2.5"
