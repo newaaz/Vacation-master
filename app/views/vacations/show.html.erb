@@ -1,1 +1,7 @@
-<h4>Vacation request № <%= "#{@vacation.id} from #{@vacation.start_date} to #{@vacation.end_date}" %></h4>
+<h4>Vacation request № <%= "#{@vacation.id}" %></h4>
+
+<%= "#{@vacation.employee.full_name} - from: #{@vacation.start_date} to: #{@vacation.end_date}" %>
+<br>
+
+<h5>Status: <span class="badge bg-secondary"><%= @vacation.status %></span></h5>
+

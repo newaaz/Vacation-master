@@ -27,15 +27,11 @@ class VacationsController < ApplicationController
     end
   end
 
-  def update
-    if %w[accept reject].include?(params[:status_action])     
+  def update    
+    if status_action_exist?(params[:status_action])
+      authorize(@vacation, authorized_action(params[:status_action]))      
 
-      #TODO: move to interactor?
-      authorize(@vacation, authorized_action(params[:status_action]))
-      
-      @vacation.change_status(params[:status_action])
-      @vacation.update!(admined_by: current_employee)
-
+      @vacation.update!(status: "#{params[:status_action]}ed", admined_by: current_employee)
       
       respond_to do |format|
         format.html { redirect_back fallback_location: root_path }
@@ -50,6 +46,10 @@ class VacationsController < ApplicationController
   end
 
   private
+
+  def status_action_exist?(status_action)
+    Vacation::STATUS_ACTIONS.keys.include?(status_action.to_sym) 
+  end
 
   def authorized_action(status_action)
     (status_action + '_vacation?').to_sym

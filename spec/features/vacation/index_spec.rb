@@ -16,7 +16,7 @@ feature 'Admin can view the list of vacation requests', %q{
 
     vacations.each do |vacation|
       expect(page).to have_link("Vacation request № #{vacation.id}")
-      expect(page).to have_content("By: #{vacation.employee.email} - from: #{vacation.start_date} to: #{vacation.end_date}")
+      expect(page).to have_content("#{vacation.employee.full_name} - from: #{vacation.start_date} to: #{vacation.end_date}")
     end
   end
 

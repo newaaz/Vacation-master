@@ -53,6 +53,7 @@ gem "bootsnap", require: false
 
 gem "aasm", "~> 5.5"
 gem "devise", "~> 4.9"
+gem "faker", "~> 3.2"
 gem "pundit", "~> 2.3"
 
 group :development do

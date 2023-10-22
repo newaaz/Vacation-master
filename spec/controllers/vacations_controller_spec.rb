@@ -31,7 +31,7 @@ RSpec.describe VacationsController, type: :controller do
         vacation.reload
       end
 
-      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Vacation status still: received'
       it_behaves_like 'Redirect to root'
     end
 
@@ -56,7 +56,7 @@ RSpec.describe VacationsController, type: :controller do
         vacation.reload
       end
 
-      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Vacation status still: received'
       it_behaves_like 'Redirect to root'
     end
 
@@ -66,11 +66,11 @@ RSpec.describe VacationsController, type: :controller do
         vacation.reload
       end
 
-      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Vacation status still: received'
       it_behaves_like 'Redirect to root'
     end
 
-    # Same with rejecting vacation
+    # Reject - same as accept 
   end
 
   describe 'GET #new' do
@@ -91,7 +91,6 @@ RSpec.describe VacationsController, type: :controller do
 
     context 'Unauthenticated employee' do
       before { get :new }
-
       it_behaves_like 'Redirect to root'
     end
   end
@@ -102,11 +101,7 @@ RSpec.describe VacationsController, type: :controller do
 
       context 'create vacation with valid attributes' do
         it 'saves new order in DB' do
-          expect {
-                  post :create,
-                  params: { vacation: attributes_for(:vacation) }
-                 }
-                 .to change(Vacation, :count).by(1)
+          expect { post :create, params: { vacation: attributes_for(:vacation) } }.to change(Vacation, :count).by(1)
         end
 
         it 'redirect to vacation path' do
@@ -117,10 +112,7 @@ RSpec.describe VacationsController, type: :controller do
 
       context 'create vacation with invalid attributes' do
         it 'does not saves new order in DB' do
-          expect {
-                  post :create,
-                  params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) }
-                 }
+          expect { post :create, params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) } }
                  .to_not change(Vacation, :count)
         end
 
@@ -132,10 +124,7 @@ RSpec.describe VacationsController, type: :controller do
 
       context 'create vacation with end_date earlier start_date' do
         it 'does not saves new order in DB' do
-          expect {
-                  post :create,
-                  params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) }
-                 }
+          expect { post :create, params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) } }
                  .to_not change(Vacation, :count)
         end
 
@@ -148,11 +137,7 @@ RSpec.describe VacationsController, type: :controller do
 
     context 'Unauthenticated employee create vacation' do
       it 'does not saves new order in DB' do
-        expect {
-                post :create,
-                params: { vacation: attributes_for(:vacation) }
-               }
-               .to_not change(Vacation, :count)
+        expect { post :create, params: { vacation: attributes_for(:vacation) } }.to_not change(Vacation, :count)
       end
 
       it 'redirect to root path' do

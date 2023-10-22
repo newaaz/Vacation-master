@@ -1,10 +1,10 @@
 <%= content_tag(:div, id: dom_id(vacation), class: "p-2 mb-2 border") do %>
   <%= link_to "Vacation request № #{vacation.id}", vacation %>
 
-  <%= "By: #{vacation.employee.email} - from: #{vacation.start_date} to: #{vacation.end_date}" %>
+  <%= "#{vacation.employee.full_name} - from: #{vacation.start_date} to: #{vacation.end_date}" %>
 
   <div class="vacation_status d-inline text-secondary fw-bold">
-    Status: <%= vacation.status %>
+    Status: <span class="badge bg-secondary"><%= vacation.status %></span>
   </div>
 
   <% if vacation.status == 'received' %>

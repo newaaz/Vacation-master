@@ -16,10 +16,12 @@ feature 'Admin can accept or reject vacation requests', %q{
       click_on 'Vacations'
 
       within "#vacation_#{vacation.id}" do
-        click_on 'Accept'        
-        expect(page).to have_content('accepted')
+        click_on 'Accept'  
+        
         expect(page).to_not have_content('received')
         expect(page).to_not have_link('Accept')
+        expect(page).to have_content('accepted')
+        expect(page).to have_content("Admined by: #{admin.email}")
       end      
     end
 
@@ -40,10 +42,12 @@ feature 'Admin can accept or reject vacation requests', %q{
       click_on 'Vacations'
 
       within "#vacation_#{vacation.id}" do
-        click_on 'Reject'        
-        expect(page).to have_content('rejected')
+        click_on 'Reject'
+
         expect(page).to_not have_content('received')
         expect(page).to_not have_link('Reject')
+        expect(page).to have_content('rejected')
+        expect(page).to have_content("Admined by: #{admin.email}")
       end      
     end
 

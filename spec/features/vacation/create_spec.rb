@@ -23,7 +23,7 @@ feature 'Employee may request a vacation', %q{
       vacation = Vacation.last
 
       expect(page).to have_content "Vacation № #{vacation.id} request sent successfully"
-      expect(page).to have_content "#{vacation.id} from #{vacation.start_date} to #{vacation.end_date}"
+      expect(page).to have_content "#{vacation.employee.full_name} - from: #{vacation.start_date} to: #{vacation.end_date}"
     end
 
     scenario 'with invalid attributes' do
