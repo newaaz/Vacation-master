@@ -13,7 +13,7 @@ class VacationsController < ApplicationController
   end
 
   def new
-    @vacation = Vacation.new
+    @vacation = Vacation.includes([:employee, :admined_by]).new
   end
 
   def create
@@ -34,7 +34,7 @@ class VacationsController < ApplicationController
       authorize(@vacation, authorized_action(params[:status_action]))
       
       @vacation.change_status(params[:status_action])
-      @vacation.update_attribute(:admined_by, current_employee)
+      @vacation.update!(admined_by: current_employee)
 
       
       respond_to do |format|
@@ -60,7 +60,7 @@ class VacationsController < ApplicationController
   end
 
   def set_vacation
-    @vacation = Vacation.find(params[:id])
+    @vacation = Vacation.includes([:employee, :admined_by]).find(params[:id])
   end
 
   def pundit_user

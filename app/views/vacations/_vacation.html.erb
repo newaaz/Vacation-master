@@ -1,11 +1,18 @@
 <%= content_tag(:div, id: dom_id(vacation), class: "p-2 mb-2 border") do %>
-  <%= link_to "Vacation request № #{vacation.id}", vacation %>  
-  <%= "from #{vacation.start_date} to #{vacation.end_date}" %>
+  <%= link_to "Vacation request № #{vacation.id}", vacation %>
 
-  <div class="vacation_status"><%= vacation.status %></div>
+  <%= "By: #{vacation.employee.email} - from: #{vacation.start_date} to: #{vacation.end_date}" %>
 
-  <div class="vacation_actions">
-    <%= link_to 'Accept', vacation_path(vacation, status_action: 'accept'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-success' %>
-    <%= link_to 'Regect', vacation_path(vacation, status_action: 'reject'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-outline-danger' %>
+  <div class="vacation_status d-inline text-secondary fw-bold">
+    Status: <%= vacation.status %>
   </div>
+
+  <% if vacation.status == 'received' %>
+    <div class="vacation_actions d-inline ms-3">
+      <%= link_to 'Accept', vacation_path(vacation, status_action: 'accept'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-success' %>
+      <%= link_to 'Reject', vacation_path(vacation, status_action: 'reject'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-outline-danger' %>
+    </div>
+  <% else %>
+    <%= "Admined by: #{vacation.admined_by.email}" %>
+  <% end %>
 <% end %>
