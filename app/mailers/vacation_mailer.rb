@@ -1,24 +1,11 @@
 class VacationMailer < ApplicationMailer
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.vacation_mailer.vacation_created.subject
-  #
-  def vacation_created
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def vacation_created(vacation)
+    @vacation = vacation
+    mail to: "admin@admin.ru", subject: "Vacation created"
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.vacation_mailer.vacation_changed_status.subject
-  #
-  def vacation_changed_status
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def vacation_changed_status(vacation)
+    @vacation = vacation
+    mail to: vacation.employee.email, subject: "Vacation changed status"
   end
 end

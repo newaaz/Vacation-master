@@ -1,3 +1,5 @@
-Vacation#vacation_created
+New vacation created
 
-<%= @greeting %>, find me in app/views/vacation_mailer/vacation_created.text.erb
+<%= url_for(@vacation) %>
+<br>
+<%= "#{@vacation.employee.full_name} - from: #{@vacation.start_date} to: #{@vacation.end_date}" %>

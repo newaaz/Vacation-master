@@ -1,3 +1,5 @@
-Vacation#vacation_changed_status
+Your vacation request was changed status
 
-<%= @greeting %>, find me in app/views/vacation_mailer/vacation_changed_status.text.erb
+<%= url_for(@vacation) %>
+<br>
+Status: <%= @vacation.status %>

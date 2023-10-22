@@ -1,5 +1,5 @@
-<h1>Vacation#vacation_changed_status</h1>
+<h1>Your vacation request was changed status</h1>
 
-<p>
-  <%= @greeting %>, find me in app/views/vacation_mailer/vacation_changed_status.html.erb
-</p>
+<%= link_to "Vacation request № #{@vacation.id}", @vacation %>
+<br>
+Status: <%= @vacation.status %>

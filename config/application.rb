@@ -28,6 +28,10 @@ module VacationMaster
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
+
+    # for upload /services
+    config.autoload_paths += [config.root.join('app')]
+    
     config.time_zone = "Moscow"
     # config.eager_load_paths << Rails.root.join("extras")
 

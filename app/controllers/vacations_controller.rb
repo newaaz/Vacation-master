@@ -20,6 +20,7 @@ class VacationsController < ApplicationController
     @vacation = current_employee.vacations.build(vacation_params)
     
     if @vacation.save
+      VacationMailer.vacation_created(@vacation).deliver_now
       flash[:success] = "Vacation № #{@vacation.id} request sent successfully"
       redirect_to @vacation
     else
