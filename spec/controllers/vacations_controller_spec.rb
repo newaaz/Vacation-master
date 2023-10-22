@@ -7,6 +7,72 @@ RSpec.describe VacationsController, type: :controller do
   let(:vacation) { create :vacation, employee: employee}
   let(:vacation_other) { create :vacation, employee: admin}
 
+  describe 'PATCH #update' do
+    context 'Admin accept request vacation' do
+      before do
+        sign_in(admin)
+        patch :update, params: { id: vacation, status_action: 'accept' }
+        vacation.reload
+      end
+
+      it 'changed status to accepted' do
+        expect(vacation.status).to eq 'accepted'
+      end
+
+      it 'request vacation admined by curretn admin' do
+        expect(vacation.admined_by).to eq admin
+      end
+    end
+
+    context 'Admin changes request vacation with wrong status_action' do
+      before do
+        sign_in(admin)
+        patch :update, params: { id: vacation, status_action: 'wrong_status_action' }
+        vacation.reload
+      end
+
+      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Redirect to root'
+    end
+
+    context 'Admin changes status of a vacation when it has already been accepted' do
+      before do
+        vacation.accepted!
+        sign_in(admin)
+        patch :update, params: { id: vacation, status_action: 'reject' }
+      end
+
+      it 'not changed vacation status' do
+        expect(vacation.status).to eq 'accepted'
+      end
+
+      it_behaves_like 'Redirect to root'
+    end
+
+    context 'Authencticated Employee tries accept request vacation' do
+      before do
+        sign_in(employee)
+        patch :update, params: { id: vacation, status_action: 'accept' }
+        vacation.reload
+      end
+
+      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Redirect to root'
+    end
+
+    context 'Unauthencticated user tries accept request vacation' do
+      before do
+        patch :update, params: { id: vacation, status_action: 'accept' }
+        vacation.reload
+      end
+
+      it_behaves_like 'Vacation status still received'
+      it_behaves_like 'Redirect to root'
+    end
+
+    # Same with rejecting vacation
+  end
+
   describe 'GET #new' do
     context 'Authenticated employee' do
       before do
@@ -26,9 +92,7 @@ RSpec.describe VacationsController, type: :controller do
     context 'Unauthenticated employee' do
       before { get :new }
 
-      it 'redirect to root path' do
-        expect(response).to redirect_to root_path
-      end
+      it_behaves_like 'Redirect to root'
     end
   end
 
@@ -122,9 +186,7 @@ RSpec.describe VacationsController, type: :controller do
         get :index
       end
 
-      it 'not renders index view' do
-        expect(response).to_not render_template :index
-      end
+      it_behaves_like 'Redirect to root'
     end
 
     context 'Unauthenticated user' do

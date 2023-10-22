@@ -5,7 +5,7 @@
   <div class="vacation_status"><%= vacation.status %></div>
 
   <div class="vacation_actions">
-    <%= link_to 'Accept', vacation_path(vacation, status_action: '111accept'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-success' %>
+    <%= link_to 'Accept', vacation_path(vacation, status_action: 'accept'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-success' %>
     <%= link_to 'Regect', vacation_path(vacation, status_action: 'reject'), data: { 'turbo-method': :patch }, class: 'btn btn-sm btn-outline-danger' %>
   </div>
 <% end %>

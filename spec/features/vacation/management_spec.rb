@@ -18,14 +18,10 @@ feature 'Admin can accept or reject vacation requests', %q{
       within "#vacation_#{vacation.id}" do
         click_on 'Accept'        
         expect(page).to have_content('accepted')
-      end
-
-      
-
-
-
-      
+      end      
     end
+
+    # Employee can see updated status of vacation
   end
   
 end
