@@ -19,8 +19,7 @@ class VacationsController < ApplicationController
   def create
     @vacation = current_employee.vacations.build(vacation_params)
     
-    if @vacation.save
-      VacationMailer.vacation_created(@vacation).deliver_now
+    if @vacation.save      
       flash[:success] = "Vacation № #{@vacation.id} request sent successfully"
       redirect_to @vacation
     else
@@ -28,11 +27,11 @@ class VacationsController < ApplicationController
     end
   end
 
-  def update    
+  def update
     if status_action_exist?(params[:status_action])
       authorize(@vacation, authorized_action(params[:status_action]))      
 
-      @vacation.update!(status: (params[:status_action] + 'ed'), admined_by: current_employee)
+      @vacation.update(status: (params[:status_action] + 'ed'), admined_by: current_employee)
       
       respond_to do |format|
         format.html { redirect_back fallback_location: root_path }

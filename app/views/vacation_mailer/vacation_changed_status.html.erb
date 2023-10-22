@@ -1,5 +1,5 @@
 <h1>Your vacation request was changed status</h1>
 
-<%= link_to "Vacation request № #{@vacation.id}", @vacation %>
+<%= link_to "Vacation request № #{@vacation.id}", vacation_url(@vacation) %>
 <br>
 Status: <%= @vacation.status %>

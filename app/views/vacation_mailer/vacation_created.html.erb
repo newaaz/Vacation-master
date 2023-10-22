@@ -1,6 +1,6 @@
 <h1>New vacation created</h1>
 
-<%= link_to "Vacation request № #{@vacation.id}", @vacation %>
+<%= link_to "Vacation request № #{@vacation.id}", vacation_url(@vacation) %>
 <br>
 <%= "#{@vacation.employee.full_name} - from: #{@vacation.start_date} to: #{@vacation.end_date}" %>
 

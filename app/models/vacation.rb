@@ -7,12 +7,18 @@ class Vacation < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validate :end_date_after_start_date
 
-  #after_create :send_notifications
+  after_create :send_notification_created
+  after_update :send_notification_changed
 
   private
 
-  def send_notifications
-    VacationCreatedNotifyService.send_notify(self)
+  # send by service
+  def send_notification_created
+    VacationCreatedNotifyService.new.send_notify(self)
+  end
+
+  def send_notification_changed
+    VacationMailer.vacation_changed_status(self).deliver_now
   end
 
   def end_date_after_start_date
