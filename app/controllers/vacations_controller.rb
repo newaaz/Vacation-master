@@ -31,7 +31,7 @@ class VacationsController < ApplicationController
     if status_action_exist?(params[:status_action])
       authorize(@vacation, authorized_action(params[:status_action]))      
 
-      @vacation.update!(status: "#{params[:status_action]}ed", admined_by: current_employee)
+      @vacation.update!(status: (params[:status_action] + 'ed'), admined_by: current_employee)
       
       respond_to do |format|
         format.html { redirect_back fallback_location: root_path }
