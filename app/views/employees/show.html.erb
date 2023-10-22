@@ -1,9 +1,8 @@
 <h2>Profile: <%= @employee.email %></h2>
 
 <% @employee.vacations.each do |vacation| %>
-  <%= link_to "Vacation request № #{vacation.id}", vacation %>
-  
-  <%= "from #{vacation.start_date} to #{vacation.end_date}" %>
-
-  <br>
+  <%= content_tag(:div, id: dom_id(vacation), class: "p-2 mb-2 border") do %>
+    <%= link_to "Vacation request № #{vacation.id}", vacation %>  
+    <%= "from #{vacation.start_date} to #{vacation.end_date}" %>
+  <% end %>
 <% end %>

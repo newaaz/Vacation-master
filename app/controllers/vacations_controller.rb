@@ -1,8 +1,8 @@
 class VacationsController < ApplicationController
-  before_action :authorize_vacation!, except: :show
-  before_action :set_vacation, only: [:show]
+  before_action :authorize_vacation!, except: %i[show update]
+  before_action :set_vacation, only: %i[show update]
 
-  after_action  :verify_authorized, except: :show
+  after_action  :verify_authorized, except: %i[show update]
 
   def index
     @vacations = Vacation.all
@@ -27,7 +27,33 @@ class VacationsController < ApplicationController
     end
   end
 
+  def update
+    if %w[accept reject].include?(params[:status_action])     
+
+      #TODO: move to interactor?
+      authorize(@vacation, authorized_action(params[:status_action]))
+      
+      @vacation.change_status(params[:status_action])
+      @vacation.update_attribute(:admined_by, current_employee)
+
+      
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path }
+        format.turbo_stream do
+          render turbo_stream:
+            turbo_stream.replace(@vacation, partial: 'vacations/vacation', locals: { vacation: @vacation })
+        end
+      end
+    else
+      redirect_to root_path, flash: { error: 'Wrong action' }
+    end
+  end
+
   private
+
+  def authorized_action(status_action)
+    (status_action + '_vacation?').to_sym
+  end
 
   def vacation_params
     params.require(:vacation).permit(:start_date, :end_date)

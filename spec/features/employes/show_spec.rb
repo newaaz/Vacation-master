@@ -14,14 +14,10 @@ feature 'Employee can see their vacation requests', %q{
       sign_in_employee(employee)
       click_on 'My profile'
 
-      #expect(page).to have_content 'Request vacation'
-
       vacations.each do |vacation|
         expect(page).to have_link("Vacation request № #{vacation.id}")
         expect(page).to have_content("from #{vacation.start_date} to #{vacation.end_date}")
       end
     end  
-  end
-  
+  end  
 end
-

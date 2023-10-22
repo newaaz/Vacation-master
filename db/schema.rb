@@ -30,16 +30,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_111849) do
 
   create_table "vacations", force: :cascade do |t|
     t.bigint "employee_id", null: false
-    t.bigint "admin_id"
+    t.bigint "admined_by_id"
     t.date "start_date", null: false
     t.date "end_date", null: false
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_vacations_on_admin_id"
+    t.index ["admined_by_id"], name: "index_vacations_on_admined_by_id"
     t.index ["employee_id"], name: "index_vacations_on_employee_id"
   end
 
   add_foreign_key "vacations", "employees"
-  add_foreign_key "vacations", "employees", column: "admin_id"
+  add_foreign_key "vacations", "employees", column: "admined_by_id"
 end

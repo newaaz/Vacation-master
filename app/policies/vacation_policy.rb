@@ -11,17 +11,17 @@ class VacationPolicy < ApplicationPolicy
     !!user
   end
 
-  def accept_order?
+  def accept_vacation?
     can_changed_from_received?
   end
 
-  def reject_order?
+  def reject_vacation?
     can_changed_from_received?
   end
 
   private
 
   def can_changed_from_received?
-    user.admin? && record.status == "received"
+    user&.admin? && record.status == "received"
   end
 end

@@ -2,11 +2,12 @@ class Vacation < ApplicationRecord
   include AASM
 
   belongs_to :employee
-  belongs_to :admin, class_name: "Employee", optional: true
+  belongs_to :admined_by, class_name: "Employee", optional: true
 
   validates :start_date, :end_date, presence: true
   validate :end_date_after_start_date
 
+  #TODO: move to concern?
   enum status: { received: 0, accepted: 1, rejected: 2 }
 
   aasm column: :status, enum: true do
