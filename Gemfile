@@ -59,6 +59,12 @@ gem "pundit", "~> 2.3"
 group :development do
   gem "web-console"
   gem "rack-mini-profiler"
+
+  # Deploy
+  gem 'capistrano', '~> 3.11', require: false  
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-passenger', '~> 0.2.0', require: false
+  gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4', require: false
 end
 
 group :development, :test do
@@ -81,4 +87,5 @@ group :test do
   gem "database_cleaner-active_record", "~> 2.0"
   gem 'pundit-matchers', '~> 1.8.4'
 end
+
 
