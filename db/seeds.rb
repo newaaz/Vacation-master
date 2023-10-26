@@ -1,6 +1,6 @@
 def create_admin!
   Employee.create!(email: 'admin@admin.ru',
-                   admin: true,password: '123456',
+                   admin: true, password: '123456',
                    password_confirmation: '123456',
                    full_name: "Administrator")
 end
@@ -19,9 +19,9 @@ def add_vacation_to(employee)
   start_date = Faker::Date.forward(days: 23)
   end_date = start_date + 20.days
   status = rand(0..2)
-  admined_by = (status == 0 ? nil : Employee.find_by(admin: true))
+  admined_by = (status.zero? ? nil : Employee.find_by(admin: true))
 
-  employee.vacations.build(start_date: start_date, end_date: end_date, status: status, admined_by: admined_by)
+  employee.vacations.build(start_date:, end_date:, status:, admined_by:)
 end
 
 Vacation.destroy_all

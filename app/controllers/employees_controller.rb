@@ -10,4 +10,3 @@ class EmployeesController < ApplicationController
     current_employee
   end
 end
-

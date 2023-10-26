@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe VacationsController, type: :controller do
-
-  let(:admin)    { create :employee, admin: true}
-  let(:employee) { create :employee}
-  let(:vacation) { create :vacation, employee: employee}
-  let(:vacation_other) { create :vacation, employee: admin}
+  let(:admin)    { create(:employee, admin: true) }
+  let(:employee) { create(:employee) }
+  let(:vacation) { create(:vacation, employee:) }
+  let(:vacation_other) { create(:vacation, employee: admin) }
 
   describe 'PATCH #update' do
     context 'Admin accept request vacation' do
@@ -70,7 +69,7 @@ RSpec.describe VacationsController, type: :controller do
       it_behaves_like 'Redirect to root'
     end
 
-    # Reject - same as accept 
+    # Reject - same as accept
   end
 
   describe 'GET #new' do
@@ -91,6 +90,7 @@ RSpec.describe VacationsController, type: :controller do
 
     context 'Unauthenticated employee' do
       before { get :new }
+
       it_behaves_like 'Redirect to root'
     end
   end
@@ -105,7 +105,7 @@ RSpec.describe VacationsController, type: :controller do
         end
 
         it 'redirect to vacation path' do
-          post :create, params: { vacation: attributes_for(:vacation) }      
+          post :create, params: { vacation: attributes_for(:vacation) }
           expect(response).to redirect_to assigns(:vacation)
         end
       end
@@ -113,23 +113,29 @@ RSpec.describe VacationsController, type: :controller do
       context 'create vacation with invalid attributes' do
         it 'does not saves new order in DB' do
           expect { post :create, params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) } }
-                 .to_not change(Vacation, :count)
+            .not_to change(Vacation, :count)
         end
 
         it 're-renders new view' do
-          post :create, params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) } 
+          post :create, params: { vacation: attributes_for(:vacation, start_date: nil, end_date: nil) }
           expect(response).to render_template :new
         end
       end
 
       context 'create vacation with end_date earlier start_date' do
         it 'does not saves new order in DB' do
-          expect { post :create, params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) } }
-                 .to_not change(Vacation, :count)
+          expect do
+            post :create,
+                 params: { vacation: attributes_for(:vacation, start_date: Time.zone.now,
+                                                               end_date: 20.days.ago) }
+          end
+            .not_to change(Vacation, :count)
         end
 
         it 're-renders new view' do
-          post :create, params: { vacation: attributes_for(:vacation, start_date: Time.now, end_date: Time.now - 20.days) } 
+          post :create,
+               params: { vacation: attributes_for(:vacation, start_date: Time.zone.now,
+                                                             end_date: 20.days.ago) }
           expect(response).to render_template :new
         end
       end
@@ -137,11 +143,11 @@ RSpec.describe VacationsController, type: :controller do
 
     context 'Unauthenticated employee create vacation' do
       it 'does not saves new order in DB' do
-        expect { post :create, params: { vacation: attributes_for(:vacation) } }.to_not change(Vacation, :count)
+        expect { post :create, params: { vacation: attributes_for(:vacation) } }.not_to change(Vacation, :count)
       end
 
       it 'redirect to root path' do
-        post :create, params: { vacation: attributes_for(:vacation) }      
+        post :create, params: { vacation: attributes_for(:vacation) }
         expect(response).to redirect_to root_path
       end
     end
@@ -156,7 +162,7 @@ RSpec.describe VacationsController, type: :controller do
         get :index
       end
 
-      it 'populates an array of all vacations' do         
+      it 'populates an array of all vacations' do
         expect(assigns(:vacations)).to match_array(vacations)
       end
 
@@ -177,7 +183,7 @@ RSpec.describe VacationsController, type: :controller do
     context 'Unauthenticated user' do
       it 'not renders index view' do
         get :index
-        expect(response).to_not render_template :index
+        expect(response).not_to render_template :index
       end
     end
   end
@@ -205,7 +211,7 @@ RSpec.describe VacationsController, type: :controller do
       end
 
       it 'not render show view' do
-        expect(response).to_not render_template :show
+        expect(response).not_to render_template :show
       end
     end
 
@@ -227,7 +233,7 @@ RSpec.describe VacationsController, type: :controller do
     context "Unauthenticated user looks at vacation" do
       it 'not render show view' do
         get :show, params: { id: vacation_other }
-        expect(response).to_not render_template :show
+        expect(response).not_to render_template :show
       end
     end
   end

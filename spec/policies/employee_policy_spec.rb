@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe EmployeePolicy do    
+describe EmployeePolicy do
   subject { described_class.new(user, employee) }
- 
+
   let(:profile_user) { create(:employee) }
   let(:employee)     { create(:employee) }
   let(:admin)        { create(:employee, admin: true) }

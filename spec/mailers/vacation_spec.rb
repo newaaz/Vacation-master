@@ -30,5 +30,4 @@ RSpec.describe VacationMailer, type: :mailer do
       expect(mail.body.encoded).to match("Your vacation request was changed status")
     end
   end
-
 end

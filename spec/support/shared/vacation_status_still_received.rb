@@ -3,4 +3,3 @@ shared_examples_for 'Vacation status still: received' do
     expect(vacation.status).to eq 'received'
   end
 end
-

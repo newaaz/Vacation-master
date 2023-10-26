@@ -13,13 +13,13 @@ class VacationsController < ApplicationController
   end
 
   def new
-    @vacation = Vacation.includes([:employee, :admined_by]).new
+    @vacation = Vacation.includes(%i[employee admined_by]).new
   end
 
   def create
     @vacation = current_employee.vacations.build(vacation_params)
-    
-    if @vacation.save      
+
+    if @vacation.save
       flash[:success] = "Vacation № #{@vacation.id} request sent successfully"
       redirect_to @vacation
     else
@@ -29,10 +29,10 @@ class VacationsController < ApplicationController
 
   def update
     if status_action_exist?(params[:status_action])
-      authorize(@vacation, authorized_action(params[:status_action]))      
+      authorize(@vacation, authorized_action(params[:status_action]))
 
-      @vacation.update(status: (params[:status_action] + 'ed'), admined_by: current_employee)
-      
+      @vacation.update(status: "#{params[:status_action]}ed", admined_by: current_employee)
+
       respond_to do |format|
         format.html { redirect_back fallback_location: root_path }
         format.turbo_stream do
@@ -48,11 +48,11 @@ class VacationsController < ApplicationController
   private
 
   def status_action_exist?(status_action)
-    Vacation::STATUS_ACTIONS.keys.include?(status_action.to_sym) 
+    Vacation::STATUS_ACTIONS.key?(status_action.to_sym)
   end
 
   def authorized_action(status_action)
-    (status_action + '_vacation?').to_sym
+    "#{status_action}_vacation?".to_sym
   end
 
   def vacation_params
@@ -60,7 +60,7 @@ class VacationsController < ApplicationController
   end
 
   def set_vacation
-    @vacation = Vacation.includes([:employee, :admined_by]).find(params[:id])
+    @vacation = Vacation.includes(%i[employee admined_by]).find(params[:id])
   end
 
   def pundit_user

@@ -1,16 +1,15 @@
 require 'rails_helper'
 
-feature 'Employee can see their vacation requests', %q{
+describe 'Employee can see their vacation requests', "
   In order to see status their vacation requests
   As an authenticated employee
   I'd like to be able to all my vacation requests
-} do
+" do
+  let(:employee)   { create(:employee) }
+  let!(:vacations) { create_list(:vacation, 3, employee:) }
 
-  given(:employee)   { create(:employee) }
-  given!(:vacations) { create_list(:vacation, 3, employee: employee) }
-
-  describe 'Authenticated employee visits his profile' do 
-    scenario 'and sees his vacation requests' do
+  describe 'Authenticated employee visits his profile' do
+    it 'and sees his vacation requests' do
       sign_in_employee(employee)
       click_on 'My profile'
 
@@ -18,6 +17,6 @@ feature 'Employee can see their vacation requests', %q{
         expect(page).to have_link("Vacation request № #{vacation.id}")
         expect(page).to have_content("from #{vacation.start_date} to #{vacation.end_date}")
       end
-    end  
-  end  
+    end
+  end
 end

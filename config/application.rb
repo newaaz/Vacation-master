@@ -31,17 +31,17 @@ module VacationMaster
 
     # for upload /services
     config.autoload_paths += [config.root.join('app')]
-    
+
     config.time_zone = "Moscow"
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
       g.test_framework :rspec,
-                        controller_specs: true,
-                        view_specs: false,
-                        helper_specs: false,
-                        routing_specs: false,
-                        request_specs: false
+                       controller_specs: true,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       request_specs: false
     end
   end
 end

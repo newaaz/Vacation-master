@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe EmployeesController, type: :controller do
-
-  let(:admin)      { create :employee, admin: true}
-  let(:employee)   { create :employee}
-  let!(:vacations) { create_list(:vacation, 3, employee: employee) }
+  let(:admin)      { create(:employee, admin: true) }
+  let(:employee)   { create(:employee) }
+  let!(:vacations) { create_list(:vacation, 3, employee:) }
 
   describe 'GET #show' do
     context 'Authenticated employee' do

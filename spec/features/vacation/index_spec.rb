@@ -1,16 +1,15 @@
 require 'rails_helper'
 
-feature 'Admin can view the list of vacation requests', %q{
+describe 'Admin can view the list of vacation requests', "
   In order to accept and reject a vacation requests
   As an admin
   I'd like to be able to to a list of all vacations
-} do
+" do
+  let!(:vacations) { create_list(:vacation, 3) }
+  let(:admin)      { create(:employee, admin: true) }
+  let(:employee)   { create(:employee) }
 
-  given!(:vacations) { create_list(:vacation, 3) }
-  given(:admin)      { create(:employee, admin: true) }
-  given(:employee)   { create(:employee) }
-
-  scenario 'Authenticated admin view list of all vacations' do
+  it 'Authenticated admin view list of all vacations' do
     sign_in_employee(admin)
     click_on 'Vacations'
 
@@ -20,14 +19,14 @@ feature 'Admin can view the list of vacation requests', %q{
     end
   end
 
-  scenario 'Authenticated employee tries to view list of all vacations' do
+  it 'Authenticated employee tries to view list of all vacations' do
     sign_in_employee(employee)
     visit root_path
-    expect(page).to_not have_link('Vacations')
+    expect(page).not_to have_link('Vacations')
   end
 
-  scenario 'Unauthenticated user tries to view list of all vacations' do
+  it 'Unauthenticated user tries to view list of all vacations' do
     visit root_path
-    expect(page).to_not have_link('Vacations')
+    expect(page).not_to have_link('Vacations')
   end
 end
