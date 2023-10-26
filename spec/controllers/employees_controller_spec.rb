@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe EmployeesController, type: :controller do
+RSpec.describe EmployeesController do
   let(:admin)      { create(:employee, admin: true) }
   let(:employee)   { create(:employee) }
-  let!(:vacations) { create_list(:vacation, 3, employee:) }
+  let(:vacations) { create_list(:vacation, 3, employee:) }
 
   describe 'GET #show' do
-    context 'Authenticated employee' do
+    context 'when authenticated employee' do
       before do
         sign_in(employee)
         get(:show, params: { id: employee })
@@ -21,14 +21,14 @@ RSpec.describe EmployeesController, type: :controller do
       end
     end
 
-    context "Unauthenticated user is trying to access the employee's page" do
+    context "when unauthenticated user is trying to access the employee's page" do
       it 'redirect to root path' do
         get(:show, params: { id: employee })
         expect(response).to redirect_to root_path
       end
     end
 
-    context "Admin is trying to access the employee's page" do
+    context "when admin is trying to access the employee's page" do
       it 'redirect to root path' do
         sign_in(admin)
         get(:show, params: { id: employee })

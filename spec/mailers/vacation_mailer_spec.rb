@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe VacationMailer, type: :mailer do
+RSpec.describe VacationMailer do
   describe "vacation_created" do
     let(:vacation) { create(:vacation) }
-    let(:mail) { VacationMailer.vacation_created(vacation) }
+    let(:mail) { described_class.vacation_created(vacation) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Vacation created")
@@ -18,7 +18,7 @@ RSpec.describe VacationMailer, type: :mailer do
 
   describe "vacation_changed_status" do
     let(:vacation) { create(:vacation) }
-    let(:mail) { VacationMailer.vacation_changed_status(vacation) }
+    let(:mail) { described_class.vacation_changed_status(vacation) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Vacation changed status")

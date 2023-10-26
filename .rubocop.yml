@@ -1,8 +1,8 @@
 require:
   - rubocop-performance
-#  - rubocop-rspec
+  - rubocop-rspec
   - rubocop-rails
-#  - rubocop-capybara
+  - rubocop-capybara
   - rubocop-factory_bot
 
 AllCops:
@@ -35,3 +35,33 @@ Metrics/MethodLength:
 
 Layout/LineLength:
   Max: 125
+
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 6
+
+RSpec/DescribeMethod:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false

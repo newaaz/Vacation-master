@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VacationsController, type: :controller do
+RSpec.describe VacationsController do
   let(:admin)    { create(:employee, admin: true) }
   let(:employee) { create(:employee) }
   let(:vacation) { create(:vacation, employee:) }

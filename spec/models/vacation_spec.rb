@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Vacation, type: :model do
+RSpec.describe Vacation do
   describe 'associations' do
     it { is_expected.to belong_to(:employee) }
   end

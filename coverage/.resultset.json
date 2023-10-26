@@ -8,7 +8,7 @@
           1,
           2,
           5,
-          5,
+          1,
           null,
           1,
           1,
@@ -694,8 +694,8 @@
           1,
           1,
           25,
-          71,
-          71,
+          59,
+          59,
           null,
           1,
           1,
@@ -778,14 +778,14 @@
         "lines": [
           1,
           1,
-          7,
-          7,
+          16,
+          16,
           null,
           null,
           1,
           null,
           1,
-          7,
+          16,
           null,
           null
         ]
@@ -794,6 +794,12 @@
         "lines": [
           1,
           1,
+          null,
+          1,
+          null,
+          1,
+          12,
+          null,
           null
         ]
       },
@@ -1072,7 +1078,7 @@
           1,
           null,
           1,
-          7,
+          10,
           null,
           null,
           1,
@@ -1121,11 +1127,11 @@
           null,
           null,
           1,
-          43,
+          46,
           null,
           null,
           1,
-          26,
+          29,
           null,
           null,
           1,
@@ -1381,7 +1387,7 @@
           null
         ]
       },
-      "/home/aaz/lessons/vacation_master/spec/mailers/vacation_spec.rb": {
+      "/home/aaz/lessons/vacation_master/spec/mailers/vacation_mailer_spec.rb": {
         "lines": [
           1,
           null,
@@ -1422,8 +1428,8 @@
         "lines": [
           1,
           1,
-          72,
-          72,
+          60,
+          60,
           null,
           null,
           1,
@@ -1493,7 +1499,7 @@
           null,
           null,
           1,
-          69,
+          57,
           null,
           null,
           1,
@@ -1501,9 +1507,9 @@
           null,
           null,
           1,
-          84,
+          72,
           null,
-          78,
+          66,
           null,
           3,
           null,
@@ -1586,7 +1592,7 @@
         "lines": [
           1,
           1,
-          11,
+          20,
           null,
           null
         ]
@@ -1599,8 +1605,8 @@
           1,
           null,
           1,
-          70,
-          70,
+          82,
+          82,
           null,
           null,
           1,
@@ -1698,7 +1704,7 @@
         "lines": [
           1,
           1,
-          11,
+          14,
           null,
           null,
           1,
@@ -1735,6 +1741,9 @@
           null,
           1,
           1,
+          null,
+          1,
+          null,
           1,
           null,
           null
@@ -1744,7 +1753,7 @@
         "lines": [
           1,
           1,
-          70,
+          58,
           null,
           null
         ]
@@ -1757,6 +1766,6 @@
         ]
       }
     },
-    "timestamp": 1698349139
+    "timestamp": 1698351611
   }
 }
