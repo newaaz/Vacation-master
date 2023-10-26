@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'pundit/matchers'
 require 'aasm/rspec'
 # require 'capybara/email/rspec'

@@ -68,7 +68,7 @@ group :development do
 end
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "better_errors", "~> 2.10"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails", "~> 6.0"
   gem "rails-controller-testing", "~> 1.0"
@@ -85,7 +85,9 @@ group :test do
   gem "shoulda-matchers", "~> 5.2"
   gem "launchy", "~> 2.5"
   gem "database_cleaner-active_record", "~> 2.0"
+  gem 'simplecov', require: false
   gem 'pundit-matchers', '~> 1.8.4'
 end
+
 
 
