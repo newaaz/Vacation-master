@@ -29,17 +29,7 @@ class VacationsController < ApplicationController
 
   def update
     if status_action_exist?(params[:status_action])
-      authorize(@vacation, authorized_action(params[:status_action]))
-
-      @vacation.update(status: "#{params[:status_action]}ed", admined_by: current_employee)
-
-      respond_to do |format|
-        format.html { redirect_back fallback_location: root_path }
-        format.turbo_stream do
-          render turbo_stream:
-            turbo_stream.replace(@vacation, partial: 'vacations/vacation', locals: { vacation: @vacation })
-        end
-      end
+      change_status(@vacation, params[:status_action])
     else
       redirect_to root_path, flash: { error: 'Wrong action' }
     end
@@ -69,5 +59,19 @@ class VacationsController < ApplicationController
 
   def authorize_vacation!
     authorize(@vacation || Vacation)
+  end
+
+  def change_status(vacation, status_action)
+    authorize(vacation, authorized_action(status_action))
+
+    vacation.update(status: "#{status_action}ed", admined_by: current_employee)
+
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path }
+      format.turbo_stream do
+        render turbo_stream:
+          turbo_stream.replace(vacation, partial: 'vacations/vacation', locals: { vacation: })
+      end
+    end
   end
 end

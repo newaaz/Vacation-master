@@ -2,8 +2,6 @@ module Statusable
   extend ActiveSupport::Concern
 
   included do
-    STATUS_ACTIONS = { accept: :accept_vacation, reject: :reject_vacation }.freeze
-
     include AASM
 
     enum status: { received: 0, accepted: 1, rejected: 2 }
@@ -22,7 +20,7 @@ module Statusable
     end
 
     def change_status(status_action)
-      aasm.send(:fire!, STATUS_ACTIONS[status_action.to_sym])
+      aasm.send(:fire!, Vacation::STATUS_ACTIONS[status_action.to_sym])
       # send email
     end
   end

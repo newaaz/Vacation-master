@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/MethodLength
 class DeviseCreateEmployees < ActiveRecord::Migration[7.0]
   def change
     create_table :employees do |t|
@@ -46,3 +47,4 @@ class DeviseCreateEmployees < ActiveRecord::Migration[7.0]
     # add_index :employees, :unlock_token,         unique: true
   end
 end
+# rubocop:enable Metrics/MethodLength

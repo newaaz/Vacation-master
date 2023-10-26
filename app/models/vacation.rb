@@ -1,4 +1,6 @@
 class Vacation < ApplicationRecord
+  STATUS_ACTIONS = { accept: :accept_vacation, reject: :reject_vacation }.freeze
+
   include Statusable
 
   belongs_to :employee
