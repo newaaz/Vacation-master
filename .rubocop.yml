@@ -1,0 +1,12 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-capybara
+  - rubocop-factory_bot
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.1
+
+  

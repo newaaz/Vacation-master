@@ -59,7 +59,7 @@ gem "pundit", "~> 2.3"
 group :development do
   gem "web-console"
   gem "rack-mini-profiler"
-
+  
   # Deploy
   gem 'capistrano', '~> 3.11', require: false  
   gem 'capistrano-rails', '~> 1.4', require: false
@@ -74,6 +74,10 @@ group :development, :test do
   gem "rails-controller-testing", "~> 1.0"
   gem "factory_bot_rails", "~> 6.2"  
   gem "letter_opener", "~> 1.8"
+  gem "rubocop", "~> 1.57", require: false  
+  gem "rubocop-performance", "~> 1.19", require: false  
+  gem "rubocop-rails", "~> 2.21", require: false  
+  gem "rubocop-rspec", "~> 2.24", require: false  
 end
 
 group :test do
@@ -88,6 +92,4 @@ group :test do
   gem 'simplecov', require: false
   gem 'pundit-matchers', '~> 1.8.4'
 end
-
-
 
